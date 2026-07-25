@@ -12,7 +12,12 @@
   --border:    #eee;
   --card-bg:   #f9f9f9;
   --accent:    #0366d6;
+  --type-bg:   #eef3fb;
 }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -41,6 +46,16 @@ h2 {
 a          { color: var(--link); text-decoration: none; }
 a:hover    { text-decoration: underline; }
 
+:target { scroll-margin-top: 1.5rem; }
+
+/* Visible focus ring for keyboard users */
+a:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* ── Contact bar ─────────────────────────────── */
 .contact-info {
   color: var(--text-dim);
@@ -62,14 +77,36 @@ a:hover    { text-decoration: underline; }
   border-left: 4px solid var(--accent);
   margin-bottom: 12px;
   border-radius: 0 4px 4px 0;
+  transition: border-color 0.15s ease;
+}
+.pub-card:hover { border-left-color: var(--link-hover); }
+
+.pub-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 .pub-title {
   font-weight: 600;
-  display: block;
 }
-.pub-card p {
-  margin: 4px 0 0;
+.pub-type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--type-bg);
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
 }
+
+.pub-citation { margin: 6px 0 0; }
+.doi { font-size: 0.85em; }
+
+.pub-actions { margin-top: 4px; }
 
 /* ── Buttons ─────────────────────────────────── */
 .btn {
@@ -126,6 +163,7 @@ footer {
     --border:    #21262d;
     --card-bg:   #161b22;
     --accent:    #1f6feb;
+    --type-bg:   #1c2533;
   }
 
   .btn-secondary {
@@ -151,6 +189,7 @@ footer {
     gap: 2px;
   }
   .pub-card { padding: 10px 14px; }
+  .pub-head { flex-direction: column; gap: 4px; align-items: flex-start; }
   .edu-list li { flex-direction: column; gap: 2px; }
 }
 
@@ -168,7 +207,10 @@ footer {
     --border:    #ccc;
     --card-bg:   #fff;
     --accent:    #111;
+    --type-bg:   #fff;
   }
+
+  html { scroll-behavior: auto; }
 
   body {
     font-size: 11pt;
@@ -177,8 +219,10 @@ footer {
   }
 
   .btn,
+  .pub-actions,
   footer,
-  .contact-info i {
+  .contact-info i,
+  .pub-type {
     display: none;
   }
 
@@ -186,10 +230,13 @@ footer {
     border-left: 2px solid #111;
     padding: 6px 12px;
     margin-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   h1 { border-bottom: 1px solid #111; }
   a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
   a[href^="mailto:"]::after,
-  a[href^="#"]::after { content: none; }
+  a[href^="#"]::after,
+  .doi::after { content: none; }
 }
